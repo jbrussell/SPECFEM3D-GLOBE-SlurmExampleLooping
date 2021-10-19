@@ -1,28 +1,32 @@
-------------------------------------
-README
-------------------------------------
+# Clone developer branch of SPECFEM3D-GLOBE
 
-Example of a global shakemovie simulation (see http://global.shakemovie.princeton.edu)
+git clone --recursive --branch devel https://github.com/geodynamics/specfem3d_globe.git
 
-This example creates a global mesh, using a 3D shear-wave speed model S362ANI (Kustowski et al. [2006], 
-and runs a spectral-element simulation. The simulation is setup to use 384 CPU cores (MPI processes).
-The runtime is about 2h 30min.
+# Now copy this example directory into `./specfem3d-globe/EXAMPLES/`
 
+# Need to modify files in ./DATA for the particular project:
+# Par_file - parameter file where mesh properties are specified
+# STATIONS - station file
+# CMTSOLUTION - CMT solution file (this will be replaced with those in ./CMTSOLUTIONS)
 
-1. forward simulation:
-----------------------
+# Ready to run the two initialization scripts to create the relevant directories and mesh.
+# Because we're using the same velocity model for all events, we can use the same mesh for all events.
+# Need to edit rootdir in 0_run_this_example.sh
 
-type:
-./run_this_example.sh
+0_prepare_for_run.sh
+sbatch 1_go_mesher_slurm.sh
 
-to setup this directory for the simulation and to run a corresponding
-script "run_mesher_solver.bash".
+# From here, check OUTPUT_FILES/values_from_mesher.h to determine how much memory to allocate for the solver.
+# Edit this value in ./shell_scripts/2_
+# This file also tells you a few useful things like how many processors are required and the minimum resolvable period.
 
-The simulation is accurate down to a shortest period of ~ 17 s.
-(minimum period resolved ~ (256/NEX_XI) * 17)
- 
-Reference seismograms for comparisons are provided in the directory: REF_SEIS/
+# We need to set up event directories that contain the DATA directory along with the mesh files in OUTPUT_FILES
 
+python 2_setup_dirs_for_loop.py
 
-Please modify the setup and scripts according to your specifics.
+# Run the shell script to loop through all directories and run the solver
+sbatch 3_run_all_CMTSOLUTIONS.sh
+
+# Gather all output sac files into a single directory with our standard file naming convention
+python 4_gather_sac_files.py
 
