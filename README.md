@@ -6,5 +6,5 @@ git clone --recursive --branch devel https://github.com/geodynamics/specfem3d_gl
 
 Now copy this example directory `global_s362ani_shakemovie_nomelt_loop_cpu24_nexxi208_20s` into `./specfem3d-globe/EXAMPLES/`.
 
-See `global_s362ani_shakemovie_nomelt_loop_cpu24_nexxi208_20s/README.jbr` for instructions for running
+See `global_s362ani_shakemovie_nomelt_loop_cpu24_nexxi208_20s/README` for instructions for running
 
