@@ -12,8 +12,8 @@
 ## (I think nodes*tasks < 32 for Oscar Exploratory account https://ccv.brown.edu/services/rates/)
 ## nodes=NPROC_XI*NCHUNKS     tasks-per-node=NPROC_XI
 ## nodes*tasks-per-node must equal NPROC_XI*NPROC_ETA*NCHUNKS
-#SBATCH --nodes=2
-#SBATCH --tasks-per-node=12
+#SBATCH --nodes=12
+#SBATCH --tasks-per-node=2
 #SBATCH --time=1:00:00
 
 ###########################################################

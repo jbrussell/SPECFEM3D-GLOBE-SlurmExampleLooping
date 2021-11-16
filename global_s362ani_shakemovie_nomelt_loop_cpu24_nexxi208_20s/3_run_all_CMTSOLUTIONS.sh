@@ -10,12 +10,21 @@ echo $workingdir
 COUNTER=0
 for evdir in ./runs/*/ ; do
     COUNTER=$[COUNTER + 1]
-    
+
     echo "$evdir"
     cd $evdir
+    
+    # Check whether SAC files have already been output. If so, skip...
+    count=`ls -1 ./OUTPUT_FILES/*.sac 2>/dev/null | wc -l`
 
-    # Run solver
-    sbatch 2_go_solver_slurm.sh
+    if [ $count != 0 ]
+    then 
+        echo "$evdir/OUTPUT_FILES/ contains SAC files... skip"
+    else
+        # Run solver
+        sbatch 2_go_solver_slurm.sh
+    fi 
+
 
     cd $workingdir
 
