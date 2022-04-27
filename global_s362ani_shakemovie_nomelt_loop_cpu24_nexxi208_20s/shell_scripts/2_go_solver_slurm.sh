@@ -14,7 +14,7 @@
 ## nodes*tasks-per-node must equal NPROC_XI*NPROC_ETA*NCHUNKS
 #SBATCH --nodes=12
 #SBATCH --tasks-per-node=2
-#SBATCH --time=2-00:00:00
+#SBATCH --time=30:00:00
 #SBATCH --mem-per-cpu=7G    # memory per cpu-core (check ./OUTPUT_FILES/values_from_mesher.h "size of static arrays per slice")
 ##SBATCH --mem=12G    # memory per node
 ##SBATCH -p bigmem

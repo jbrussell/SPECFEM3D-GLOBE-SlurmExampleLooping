@@ -5,7 +5,7 @@ import glob
 
 # %% codecell
 path2runs = './runs/'
-path2sac = './SAC_7goodevs/'
+path2sac = './SAC_20s/'
 comp_pref = 'BH'
 
 if not os.path.exists(path2sac):
