@@ -1,0 +1,32 @@
+# Clone developer branch of SPECFEM3D-GLOBE
+
+git clone --recursive --branch devel https://github.com/geodynamics/specfem3d_globe.git
+
+# Now copy this example directory into `./specfem3d-globe/EXAMPLES/`
+
+# Need to modify files in ./DATA for the particular project:
+# Par_file - parameter file where mesh properties are specified
+# STATIONS - station file
+# CMTSOLUTION - CMT solution file (this will be replaced with those in ./CMTSOLUTIONS)
+
+# Ready to run the two initialization scripts to create the relevant directories and mesh.
+# Because we're using the same velocity model for all events, we can use the same mesh for all events.
+# Need to edit rootdir in 0_run_this_example.sh
+
+./0_prepare_for_run.sh
+
+sbatch 1_go_mesher_slurm.sh
+
+# From here, check OUTPUT_FILES/values_from_mesher.h to determine how much memory to allocate for the solver ("size of static arrays per slice")
+# Edit "--mem-per-cpu" in ./shell_scripts/2_go_solver_slurm.sh
+# This file also tells you a few useful things like how many processors are required and the minimum resolvable period.
+
+# We need to set up event directories that contain the DATA directory along with the mesh files in OUTPUT_FILES
+sbatch 2_run_setup_dirs_for_loop.sh
+
+# Run the shell script to loop through all directories and run the solver
+sbatch 3_run_all_CMTSOLUTIONS.sh
+
+# Gather all output sac files into a single directory with our standard file naming convention
+sbatch 4_run_gather_sac_files.sh
+
